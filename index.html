@@ -687,7 +687,7 @@ body::before {
 // ─────────────────────────────────────────
 // CONFIG — paste your Apps Script URL here
 // ─────────────────────────────────────────
-const HARDCODED_SCRIPT_URL = '';  // ← Replace with your deployed Apps Script URL
+const HARDCODED_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIHUJ-GHb_U4RY9TTFfHRNute-VRgkeqvQKM0laNV84bGZdVTEJQJiTUfc7KACeDtulw/exec';  // ← Replace with your deployed Apps Script URL
 let SCRIPT_URL = HARDCODED_SCRIPT_URL || localStorage.getItem('gas_script_url') || '';
 
 const IS_ADMIN = /[?&#]admin\b/.test(window.location.search + window.location.hash);
