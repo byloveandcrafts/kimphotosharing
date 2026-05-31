@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mark Anthony &amp; Kimberly — Wedding Memories</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Cormorant+Upright:wght@300;400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Champagne Palette */
+  --champ:        #c9a84c;
+  --champ-light:  #e2c97e;
+  --champ-pale:   #f5e9c8;
+  --champ-mist:   #faf4e5;
+  --champ-fog:    #fdf9f0;
+  --champ-dark:   #9a7535;
+  --champ-deep:   #6b4f1e;
+  --ivory:        #fefdf8;
+  --cream:        #f8f4e9;
+  --ink:          #2a2015;
+  --ink-soft:     #5a4a2e;
+  --ink-muted:    #8a7558;
+  --shadow-s:     rgba(100,76,30,0.10);
+  --shadow-g:     rgba(100,76,30,0.18);
+  --border:       rgba(180,145,70,0.22);
+  --card:         rgba(254,253,248,0.97);
+  --t:            0.35s cubic-bezier(0.4,0,0.2,1);
+
+  --deep:   var(--ink);
+  --muted:  var(--ink-muted);
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--champ-fog);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Champagne bubbles canvas */
+#bubbles-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.45;
+}
+
+body::before {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    radial-gradient(ellipse at 10% 15%, rgba(201,168,76,0.13) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 85%, rgba(226,201,126,0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(245,233,200,0.08) 0%, transparent 60%);
+}
+
+.wrap { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+/* ── HERO ───────────────────────────────── */
+.hero { text-align: center; padding: 3.5rem 1rem 1.5rem; }
+.hero-crest {
+  display: block;
+  margin: 0 auto 1.2rem;
+  width: 56px; height: 56px;
+  opacity: 0.75;
+}
+.hero-ornament {
+  font-size: 0.75rem;
+  color: var(--champ);
+  letter-spacing: 0.55rem;
+  display: block;
+  margin-bottom: 0.8rem;
+  opacity: 0.9;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-family: 'Cormorant Upright', serif;
+  font-size: clamp(2.4rem, 5.5vw, 3.4rem);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.12;
+  letter-spacing: 0.01em;
+}
+.hero h1 em {
+  font-style: italic;
+  font-family: 'Playfair Display', serif;
+  color: var(--champ-dark);
+  font-weight: 400;
+}
+.hero-amp {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--champ);
+  font-size: 0.85em;
+  display: block;
+  margin: 0.1rem 0;
+}
+.hero-sub {
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-top: 0.75rem;
+}
+.admin-badge {
+  display:inline-block; background:var(--ink); color:var(--cream);
+  font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase;
+  padding:0.3rem 0.9rem; border-radius:20px; margin-top:0.75rem;
+}
+.divider {
+  display:flex; align-items:center; gap:1rem; margin:1.6rem 0; opacity:0.5;
+}
+.divider::before,.divider::after {
+  content:''; flex:1; height:0.5px;
+  background: linear-gradient(90deg, transparent, var(--champ), transparent);
+}
+.divider span { color:var(--champ); font-size:1rem; }
+
+/* ── CARD ───────────────────────────────── */
+.card {
+  background: var(--card);
+  border: 0.5px solid var(--border);
+  border-radius: 16px;
+  padding: 1.8rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 18px var(--shadow-s);
+}
+.card-title {
+  font-family: 'Cormorant Upright', serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+.card-sub { font-size: 0.78rem; color: var(--ink-muted); letter-spacing: 0.08em; margin-bottom: 1.2rem; }
+
+/* ── TABS ───────────────────────────────── */
+.tabs {
+  display:flex; border:0.5px solid var(--border); border-radius:10px;
+  overflow:hidden; margin-bottom:2rem; background:rgba(245,233,200,0.35);
+}
+.tab {
+  flex:1; padding:0.7rem 1rem; font-family:'Jost',sans-serif; font-size:0.78rem;
+  font-weight:400; letter-spacing:0.12em; text-transform:uppercase;
+  background:transparent; border:none; color:var(--ink-muted); cursor:pointer; transition:all var(--t);
+}
+.tab.active { background:var(--ink); color:var(--cream); }
+.tab:not(.active):hover { background:var(--champ-pale); color:var(--ink); }
+
+/* ── PANELS ─────────────────────────────── */
+.panel { display:none; animation:fadeUp 0.35s ease; }
+.panel.active { display:block; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+/* ── UPLOAD ZONE ────────────────────────── */
+.upload-zone {
+  border: 1.5px dashed var(--champ-light);
+  border-radius: 12px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--t);
+  background: rgba(201,168,76,0.05);
+}
+.upload-zone:hover, .upload-zone.drag-over {
+  border-color: var(--champ);
+  background: rgba(201,168,76,0.09);
+}
+.upload-icon { width:48px; height:48px; margin:0 auto 1rem; opacity:0.4; color: var(--champ-dark); }
+.upload-zone p { font-size:0.88rem; color:var(--ink-muted); line-height:1.7; }
+.upload-zone strong { color:var(--champ-dark); font-weight:500; }
+#file-input { display:none; }
+
+/* ── NAME FIELD ─────────────────────────── */
+.name-field { display:flex; gap:0.75rem; margin-bottom:1rem; }
+.name-field input {
+  flex:1; padding:0.65rem 1rem; border:0.5px solid var(--border);
+  border-radius:8px; font-family:'Jost',sans-serif; font-size:0.88rem;
+  background:var(--cream); color:var(--ink); outline:none; transition:border-color var(--t);
+}
+.name-field input:focus { border-color:var(--champ); }
+.name-field input::placeholder { color:var(--ink-muted); }
+
+/* ── PREVIEW GRID ───────────────────────── */
+.preview-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(90px,1fr)); gap:8px; margin-top:1rem; }
+.preview-item { aspect-ratio:1; border-radius:8px; overflow:hidden; position:relative; background:var(--champ-pale); border:0.5px solid var(--border); }
+.preview-item img { width:100%; height:100%; object-fit:cover; }
+.preview-item video { width:100%; height:100%; object-fit:cover; display:block; }
+.preview-item .rm {
+  position:absolute; top:4px; right:4px; width:26px; height:26px;
+  background:rgba(42,32,21,0.85); border:none; border-radius:50%; color:white;
+  font-size:11px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  z-index:10; -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+}
+.vid-badge { position:absolute; bottom:4px; left:4px; background:rgba(42,32,21,0.72); color:#fff; font-size:9px; letter-spacing:0.05em; padding:2px 6px; border-radius:4px; }
+.vid-play { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; }
+.vid-play svg { width:28px; height:28px; opacity:0.85; filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4)); }
+
+/* ── BUTTON ─────────────────────────────── */
+.btn {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  padding:0.7rem 1.6rem; border-radius:8px; font-family:'Jost',sans-serif;
+  font-size:0.82rem; font-weight:400; letter-spacing:0.1em; text-transform:uppercase;
+  cursor:pointer; transition:all var(--t); border:0.5px solid;
+  -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+}
+.btn-primary { background:var(--ink); color:var(--cream); border-color:var(--ink); }
+.btn-primary:hover { background:var(--champ-deep); border-color:var(--champ-deep); }
+.btn-outline { background:transparent; color:var(--ink); border-color:var(--border); }
+.btn-outline:hover { background:var(--champ-pale); border-color:var(--champ-light); }
+.btn-gold { background: linear-gradient(135deg,var(--champ-dark),var(--champ)); color:var(--ivory); border-color:var(--champ); }
+.btn-gold:hover { background: linear-gradient(135deg,var(--champ-deep),var(--champ-dark)); }
+.btn:disabled { opacity:0.38; cursor:not-allowed; }
+
+/* ── GALLERY ────────────────────────────── */
+.gallery-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:10px; }
+.gallery-item {
+  aspect-ratio:1; border-radius:12px; overflow:hidden; position:relative;
+  background:var(--champ-pale); cursor:pointer; border:0.5px solid var(--border);
+  transition:transform var(--t), box-shadow var(--t);
+}
+.gallery-item:hover { transform:scale(1.025); box-shadow:0 6px 22px var(--shadow-g); }
+.gallery-item img { width:100%; height:100%; object-fit:cover; pointer-events:none; }
+.gallery-item video { width:100%; height:100%; object-fit:cover; pointer-events:none; display:block; }
+.gallery-meta {
+  position:absolute; bottom:0; left:0; right:0;
+  background:linear-gradient(transparent,rgba(42,32,21,0.75));
+  padding:1rem 0.5rem 0.4rem;
+}
+.gallery-meta span { font-size:0.7rem; color:rgba(252,246,230,0.92); font-weight:300; }
+.gallery-item .gal-play { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; }
+.gallery-item .gal-play svg { width:36px; height:36px; opacity:0.9; filter:drop-shadow(0 1px 4px rgba(0,0,0,0.45)); }
+.empty-state {
+  text-align:center; padding:3rem 1rem; color:var(--ink-muted);
+  font-size:0.95rem; font-family:'Cormorant Upright',serif;
+}
+
+/* ── QR ─────────────────────────────────── */
+.qr-wrapper { display:flex; flex-direction:column; align-items:center; gap:1.5rem; }
+#qr-canvas {
+  background:white; border-radius:14px; border:0.5px solid var(--border);
+  padding:16px; box-shadow:0 2px 24px var(--shadow-s);
+}
+.qr-url {
+  font-size:0.75rem; color:var(--ink-muted); word-break:break-all; text-align:center;
+  max-width:300px; background:var(--champ-mist); padding:0.5rem 1rem;
+  border-radius:6px; border:0.5px solid var(--border); cursor:pointer;
+}
+.qr-actions { display:flex; gap:0.75rem; flex-wrap:wrap; justify-content:center; }
+.qr-steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:0.75rem; margin-top:1rem; }
+.qr-step { background:var(--champ-mist); border:0.5px solid var(--border); border-radius:10px; padding:1rem; text-align:center; }
+.qr-step-icon { font-size:1.4rem; margin-bottom:0.5rem; }
+.qr-step p { font-size:0.77rem; color:var(--ink-muted); line-height:1.5; }
+.admin-note {
+  margin-top:1.25rem; padding:0.9rem 1rem;
+  background:rgba(42,32,21,0.04); border:0.5px solid var(--border);
+  border-radius:10px; font-size:0.78rem; color:var(--ink-muted); line-height:1.7;
+}
+.admin-note strong { color:var(--ink); }
+.admin-note code { background:var(--champ-mist); padding:1px 5px; border-radius:4px; font-size:0.75rem; }
+
+/* ── ADMIN ──────────────────────────────── */
+.setting-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0.9rem 0; border-bottom:0.5px solid var(--border);
+}
+.setting-row:last-child { border-bottom:none; }
+.setting-label { font-size:0.88rem; color:var(--ink); }
+.setting-hint { font-size:0.75rem; color:var(--ink-muted); margin-top:2px; }
+.toggle {
+  width:40px; height:22px; background:var(--border); border-radius:20px;
+  position:relative; cursor:pointer; border:none; transition:background var(--t); flex-shrink:0;
+}
+.toggle.on { background:var(--champ); }
+.toggle::after {
+  content:''; position:absolute; width:16px; height:16px; background:white;
+  border-radius:50%; top:3px; left:3px; transition:transform var(--t);
+}
+.toggle.on::after { transform:translateX(18px); }
+.pin-input {
+  width:110px; padding:0.45rem 0.75rem; border:0.5px solid var(--border);
+  border-radius:7px; font-family:'Jost',sans-serif; font-size:0.85rem;
+  background:var(--cream); color:var(--ink); outline:none; text-align:center; letter-spacing:0.2em;
+}
+
+/* ── STATS ──────────────────────────────── */
+.stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:1.5rem; }
+.stat {
+  background:var(--card); border:0.5px solid var(--border); border-radius:12px;
+  padding:1rem; text-align:center; box-shadow:0 1px 8px var(--shadow-s);
+}
+.stat-n {
+  font-family:'Cormorant Upright',serif; font-size:2rem; font-weight:400;
+  color:var(--champ-dark); line-height:1;
+}
+.stat-l { font-size:0.72rem; color:var(--ink-muted); letter-spacing:0.1em; text-transform:uppercase; margin-top:4px; }
+
+/* ── TOAST ──────────────────────────────── */
+.toast {
+  position:fixed; bottom:1.5rem; left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--ink); color:var(--cream);
+  padding:0.7rem 1.4rem; border-radius:8px;
+  font-size:0.82rem; letter-spacing:0.05em;
+  transition:transform 0.3s ease; z-index:100; white-space:nowrap;
+}
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+/* ── LIGHTBOX ───────────────────────────── */
+.lb-overlay {
+  position:fixed; inset:0; background:rgba(18,12,6,0.93);
+  z-index:200; display:none; align-items:center; justify-content:center;
+  flex-direction:column; gap:1rem;
+}
+.lb-overlay.open { display:flex; }
+.lb-overlay img { max-width:90vw; max-height:80vh; border-radius:8px; object-fit:contain; }
+.lb-overlay video { max-width:90vw; max-height:80vh; border-radius:8px; object-fit:contain; }
+.lb-close {
+  position:absolute; top:1.5rem; right:1.5rem; background:rgba(255,255,255,0.12);
+  border:none; color:white; width:36px; height:36px; border-radius:50%;
+  font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:background var(--t);
+}
+.lb-close:hover { background:rgba(255,255,255,0.25); }
+.lb-info { color:rgba(245,233,200,0.65); font-size:0.8rem; letter-spacing:0.08em; }
+
+/* ── PROGRESS ───────────────────────────── */
+.upload-progress { height:3px; background:var(--border); border-radius:3px; overflow:hidden; margin-top:1rem; display:none; }
+.upload-progress-bar { height:100%; background: linear-gradient(90deg,var(--champ-dark),var(--champ-light)); border-radius:3px; transition:width 0.3s; width:0%; }
+
+/* ── DL BAR ─────────────────────────────── */
+.dl-bar {
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:0.75rem; margin-bottom:1.5rem;
+  background:var(--card); border:0.5px solid var(--border);
+  border-radius:14px; padding:1rem 1.25rem; box-shadow:0 1px 8px var(--shadow-s);
+}
+.dl-bar-title { font-family:'Cormorant Upright',serif; font-size:1.1rem; font-weight:400; color:var(--ink); }
+.dl-bar-sub { font-size:0.75rem; color:var(--ink-muted); }
+
+/* ── LIVE INDICATOR ─────────────────────── */
+.fb-status { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.72rem; color:var(--ink-muted); letter-spacing:0.05em; }
+.fb-dot { width:7px; height:7px; border-radius:50%; background:#ccc; flex-shrink:0; transition:background 0.3s; }
+.fb-dot.live { background:var(--champ); animation:pulse 2s infinite; }
+.fb-dot.error { background:#c0614a; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+
+/* ── GUEST WAITING ──────────────────────── */
+.guest-waiting {
+  background:var(--card); border:0.5px solid var(--border); border-radius:16px;
+  padding:3rem 2rem; text-align:center; box-shadow:0 2px 16px var(--shadow-s);
+}
+
+/* ── SCRIPT SETUP ───────────────────────── */
+.script-setup {
+  background: linear-gradient(135deg, var(--champ-mist), var(--champ-pale));
+  border:1px solid var(--champ-light); border-radius:14px; padding:1.5rem; margin-bottom:1.5rem;
+}
+.script-setup p { font-size:0.82rem; color:var(--ink); line-height:1.8; margin-bottom:0.75rem; }
+.script-setup input {
+  width:100%; padding:0.6rem 0.9rem; border:0.5px solid var(--border);
+  border-radius:7px; font-family:'Jost',sans-serif; font-size:0.8rem;
+  background:var(--ivory); color:var(--ink); outline:none; margin-bottom:0.75rem;
+}
+.script-setup input:focus { border-color:var(--champ); }
+
+/* ── DECORATIVE GOLD BAND ────────────────── */
+.gold-band {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--champ-light), var(--champ), var(--champ-light), transparent);
+  margin: 0.5rem 0 1.8rem;
+  border-radius: 1px;
+  opacity: 0.6;
+}
+
+@media (max-width:480px) {
+  .tabs { flex-wrap:wrap; }
+  .tab { flex:1 1 auto; min-width:calc(50% - 1px); font-size:0.72rem; padding:0.6rem 0.5rem; }
+  .stats { grid-template-columns:repeat(3,1fr); }
+  .name-field { flex-direction:column; }
+  .dl-bar { flex-direction:column; align-items:flex-start; }
+  .qr-actions { flex-direction:column; width:100%; }
+  .qr-actions .btn { justify-content:center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Champagne Bubbles Canvas -->
+<canvas id="bubbles-canvas"></canvas>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <!-- Champagne glass SVG crest -->
+    <svg class="hero-crest" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="28" cy="14" rx="13" ry="10" stroke="#c9a84c" stroke-width="1" fill="rgba(201,168,76,0.08)"/>
+      <path d="M15 14 C15 14 18 32 28 32 C38 32 41 14 41 14" stroke="#c9a84c" stroke-width="1" fill="rgba(201,168,76,0.06)"/>
+      <line x1="28" y1="32" x2="28" y2="44" stroke="#c9a84c" stroke-width="1"/>
+      <line x1="20" y1="44" x2="36" y2="44" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="22" cy="20" r="1.2" fill="#c9a84c" opacity="0.7"/>
+      <circle cx="28" cy="17" r="1" fill="#c9a84c" opacity="0.6"/>
+      <circle cx="34" cy="22" r="0.9" fill="#c9a84c" opacity="0.5"/>
+    </svg>
+    <span class="hero-ornament">✦ &nbsp; Wedding Memories &nbsp; ✦</span>
+    <h1>
+      Mark Anthony
+      <span class="hero-amp">&amp;</span>
+      Kimberly
+    </h1>
+    <p class="hero-sub">November 8, 2026</p>
+    <div id="admin-mode-badge" style="display:none;margin-top:0.6rem;">
+      <span class="admin-badge">🔑 Admin Mode</span>
+    </div>
+    <div class="divider"><span>❦</span></div>
+  </div>
+
+  <!-- SCRIPT URL PROMPT -->
+  <div id="script-url-prompt" class="script-setup" style="display:none;">
+    <div class="card-title" style="margin-bottom:0.5rem;">Connect to Google Drive</div>
+    <p>Paste your Google Apps Script Web App URL below to enable photo uploads.</p>
+    <input type="url" id="script-url-input" placeholder="https://script.google.com/macros/s/…/exec" />
+    <button class="btn btn-gold" onclick="saveScriptUrl()">Connect ✦</button>
+  </div>
+
+  <!-- SETUP (admin only) -->
+  <div id="setup-section" style="display:none;" class="card">
+    <div class="card-title">Set up your album</div>
+    <div class="card-sub">Personalize your memory collection</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;">
+      <input id="bride-name" class="pin-input" style="width:100%;text-align:left;letter-spacing:0;" placeholder="Bride's name" value="Kimberly" />
+      <input id="groom-name" class="pin-input" style="width:100%;text-align:left;letter-spacing:0;" placeholder="Groom's name" value="Mark Anthony" />
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1rem;">
+      <input id="wedding-date" type="date" class="pin-input" style="width:100%;text-align:left;letter-spacing:0;" value="2026-11-08" />
+      <input id="album-pin" class="pin-input" placeholder="Admin PIN (4-digit)" maxlength="4" type="password" />
+    </div>
+    <button class="btn btn-gold" onclick="saveSetup()">Create Album ✦</button>
+  </div>
+
+  <!-- GUEST WAITING -->
+  <div id="guest-waiting" style="display:none;" class="guest-waiting">
+    <div style="font-size:2.5rem;margin-bottom:1rem;">🥂</div>
+    <div class="card-title" style="margin-bottom:0.5rem;">Album Coming Soon</div>
+    <p style="font-size:0.88rem;color:var(--ink-muted);line-height:1.7;">
+      The wedding memory album is being prepared.<br>Check back closer to the wedding day!
+    </p>
+  </div>
+
+  <!-- MAIN UI -->
+  <div id="main-ui" style="display:none;">
+
+    <!-- COUPLE HEADER -->
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <p id="couple-display" style="font-family:'Cormorant Upright',serif;font-size:1.75rem;font-weight:400;color:var(--champ-dark);">— & —</p>
+      <p id="date-display" style="font-size:0.77rem;color:var(--ink-muted);letter-spacing:0.12em;margin-top:0.25rem;"></p>
+      <div style="margin-top:0.5rem;">
+        <span class="fb-status">
+          <span class="fb-dot" id="fb-dot"></span>
+          <span id="fb-status-text">Connecting…</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- GOLD BAND -->
+    <div class="gold-band"></div>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat"><div class="stat-n" id="st-photos">0</div><div class="stat-l">Photos</div></div>
+      <div class="stat"><div class="stat-n" id="st-videos">0</div><div class="stat-l">Videos</div></div>
+      <div class="stat"><div class="stat-n" id="st-guests">0</div><div class="stat-l">Guests</div></div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('upload',this)">Upload</button>
+      <button class="tab" onclick="showTab('gallery',this)">Gallery</button>
+      <button class="tab admin-only" id="tab-btn-share" onclick="showTab('share',this)" style="display:none;">QR Code</button>
+      <button class="tab admin-only" id="tab-btn-admin" onclick="showTab('admin',this)" style="display:none;">Admin</button>
+    </div>
+
+    <!-- UPLOAD PANEL -->
+    <div class="panel active" id="tab-upload">
+      <div class="card">
+        <div class="card-title">Share your moments</div>
+        <div class="card-sub">No login needed · Photos & videos welcome</div>
+        <div class="name-field">
+          <input type="text" id="guest-name" placeholder="Your name" />
+        </div>
+        <div class="upload-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+          <svg class="upload-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor">
+            <circle cx="24" cy="24" r="23" stroke-width="0.8" opacity="0.3"/>
+            <path d="M24 32V18M24 18L18 24M24 18L30 24" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14 34h20" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+          </svg>
+          <p><strong>Tap to choose</strong> or drag & drop here</p>
+          <p style="margin-top:4px;font-size:0.75rem;">Photos & Videos · JPG, PNG, MP4, MOV supported</p>
+        </div>
+        <input type="file" id="file-input" multiple accept="image/jpeg,image/png,image/gif,image/webp,image/heic,image/heif,video/mp4,video/quicktime,video/x-m4v,video/*" />
+        <div class="upload-progress" id="upload-prog">
+          <div class="upload-progress-bar" id="upload-bar"></div>
+        </div>
+        <div class="preview-grid" id="preview-grid"></div>
+        <div style="display:flex;gap:0.75rem;margin-top:1.2rem;flex-wrap:wrap;">
+          <button class="btn btn-gold" id="upload-btn" onclick="uploadFiles()" disabled>Upload to Album ✦</button>
+          <button class="btn btn-outline" onclick="clearPreview()">Clear</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GALLERY PANEL -->
+    <div class="panel" id="tab-gallery">
+      <div class="dl-bar">
+        <div>
+          <div class="dl-bar-title">All Memories</div>
+          <div class="dl-bar-sub" id="gallery-count">0 files collected</div>
+        </div>
+        <button class="btn btn-gold admin-only" id="dl-all-btn" onclick="downloadAll()" style="display:none;" disabled>⬇ Download All</button>
+      </div>
+      <div class="gallery-grid" id="gallery-grid">
+        <div class="empty-state" style="grid-column:1/-1;">No memories yet — be the first to share! 🥂</div>
+      </div>
+    </div>
+
+    <!-- QR PANEL -->
+    <div class="panel" id="tab-share">
+      <div class="card">
+        <div class="card-title">Your Sharing QR Code</div>
+        <div class="card-sub">Display at the venue · Guests scan to upload instantly</div>
+        <div class="qr-wrapper">
+          <div id="qr-canvas"></div>
+          <div class="qr-url" id="qr-url-display" onclick="copyUrl()">Tap to copy link</div>
+          <div class="qr-actions">
+            <button class="btn btn-gold" onclick="downloadQR()">⬇ Download QR</button>
+            <button class="btn btn-outline" onclick="copyUrl()">Copy Link</button>
+          </div>
+        </div>
+        <div class="qr-steps">
+          <div class="qr-step"><div class="qr-step-icon">📲</div><p>Guests scan QR with phone camera</p></div>
+          <div class="qr-step"><div class="qr-step-icon">📸</div><p>They choose photos or videos to share</p></div>
+          <div class="qr-step"><div class="qr-step-icon">✨</div><p>Memories appear in the album live</p></div>
+          <div class="qr-step"><div class="qr-step-icon">⬇</div><p>Admin downloads everything in one ZIP</p></div>
+        </div>
+        <div class="admin-note">
+          <strong>🔑 Admin tip:</strong> Bookmark this page with <code>?admin</code> in the URL to return to admin mode anytime.<br>
+          Guests who scan the QR will never see admin controls.
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div class="panel" id="tab-admin">
+      <div id="admin-lock" class="card" style="text-align:center;">
+        <div class="card-title" style="margin-bottom:1rem;">Admin Access</div>
+        <input type="password" id="admin-pin-input" class="pin-input" placeholder="Enter PIN" maxlength="4"
+          style="margin-bottom:1rem;" onkeydown="if(event.key==='Enter')unlockAdmin()" />
+        <br>
+        <button class="btn btn-gold" onclick="unlockAdmin()">Unlock ✦</button>
+      </div>
+      <div id="admin-panel" style="display:none;">
+        <div class="card">
+          <div class="card-title">Album Settings</div>
+          <div class="card-sub">Manage your wedding memory collection</div>
+          <div class="setting-row">
+            <div><div class="setting-label">Allow uploads</div><div class="setting-hint">Guests can add photos & videos</div></div>
+            <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+          </div>
+          <div class="setting-row">
+            <div><div class="setting-label">Show guest names</div><div class="setting-hint">Display who submitted each memory</div></div>
+            <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+          </div>
+          <div class="setting-row">
+            <div><div class="setting-label">Video uploads</div><div class="setting-hint">Allow video files (may be slower)</div></div>
+            <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Manage Files</div>
+          <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:0.5rem;">
+            <button class="btn btn-gold" onclick="downloadAll()">⬇ Download All as ZIP</button>
+            <button class="btn btn-outline" style="border-color:#c0614a;color:#c0614a;" onclick="clearAlbum()">Clear Album</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Change Couple Info</div>
+          <div style="display:grid;gap:0.75rem;margin-top:0.5rem;">
+            <input id="edit-bride" class="pin-input" style="width:100%;text-align:left;letter-spacing:0;" placeholder="Bride's name" />
+            <input id="edit-groom" class="pin-input" style="width:100%;text-align:left;letter-spacing:0;" placeholder="Groom's name" />
+            <button class="btn btn-gold" onclick="updateCouple()">Save Changes</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Change Script URL</div>
+          <div style="display:grid;gap:0.75rem;margin-top:0.5rem;">
+            <input id="edit-script-url" class="pin-input" style="width:100%;text-align:left;letter-spacing:0;" placeholder="Apps Script URL" />
+            <button class="btn btn-gold" onclick="updateScriptUrl()">Save URL</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main-ui -->
+</div><!-- /wrap -->
+
+<!-- LIGHTBOX -->
+<div class="lb-overlay" id="lightbox" onclick="closeLb(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <div id="lb-content"></div>
+  <div class="lb-info" id="lb-info"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─────────────────────────────────────────
+// CHAMPAGNE BUBBLES ANIMATION
+// ─────────────────────────────────────────
+(function() {
+  const canvas = document.getElementById('bubbles-canvas');
+  const ctx = canvas.getContext('2d');
+  let bubbles = [];
+  let raf;
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function spawnBubble() {
+    return {
+      x:     Math.random() * canvas.width,
+      y:     canvas.height + 20,
+      r:     1 + Math.random() * 3.5,
+      speed: 0.4 + Math.random() * 0.8,
+      drift: (Math.random() - 0.5) * 0.35,
+      alpha: 0.1 + Math.random() * 0.35,
+      hue:   Math.random() > 0.6 ? '#c9a84c' : '#e2c97e'
+    };
+  }
+
+  function init() {
+    resize();
+    for (let i = 0; i < 40; i++) {
+      const b = spawnBubble();
+      b.y = Math.random() * canvas.height;
+      bubbles.push(b);
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    bubbles.forEach(b => {
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      ctx.strokeStyle = b.hue;
+      ctx.globalAlpha = b.alpha;
+      ctx.lineWidth = 0.7;
+      ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  function tick() {
+    bubbles.forEach(b => {
+      b.y -= b.speed;
+      b.x += b.drift;
+    });
+    bubbles = bubbles.filter(b => b.y > -20);
+    while (bubbles.length < 50) bubbles.push(spawnBubble());
+    draw();
+    raf = requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('resize', resize);
+  init();
+  tick();
+})();
+
+// ─────────────────────────────────────────
+// CONFIG — paste your Apps Script URL here
+// ─────────────────────────────────────────
+const HARDCODED_SCRIPT_URL = '';  // ← Replace with your deployed Apps Script URL
+let SCRIPT_URL = HARDCODED_SCRIPT_URL || localStorage.getItem('gas_script_url') || '';
+
+const IS_ADMIN = /[?&#]admin\b/.test(window.location.search + window.location.hash);
+
+// ─────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────
+let mediaStore   = [];
+let settings     = { bride:'Kimberly', groom:'Mark Anthony', date:'2026-11-08', pin:'1234' };
+let pendingFiles = [];
+
+// ─────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────
+function init() {
+  if (IS_ADMIN) {
+    document.getElementById('admin-mode-badge').style.display = 'block';
+    document.querySelectorAll('.admin-only').forEach(el => el.style.display = '');
+  }
+
+  const dz = document.getElementById('drop-zone');
+  dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+  dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+  dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
+  document.getElementById('file-input').addEventListener('change', e => handleFiles(e.target.files));
+
+  if (!localStorage.getItem('gas_script_url') && HARDCODED_SCRIPT_URL) {
+    localStorage.setItem('gas_script_url', HARDCODED_SCRIPT_URL);
+  }
+
+  if (!SCRIPT_URL) {
+    if (IS_ADMIN) {
+      document.getElementById('script-url-prompt').style.display = 'block';
+    } else {
+      document.getElementById('guest-waiting').style.display = 'block';
+    }
+    return;
+  }
+
+  loadAlbum();
+}
+
+function saveScriptUrl() {
+  const url = document.getElementById('script-url-input').value.trim();
+  if (!url.startsWith('https://script.google.com/')) {
+    toast('Please enter a valid Apps Script URL'); return;
+  }
+  localStorage.setItem('gas_script_url', url);
+  SCRIPT_URL = url;
+  document.getElementById('script-url-prompt').style.display = 'none';
+  loadAlbum();
+}
+
+function updateScriptUrl() {
+  const url = document.getElementById('edit-script-url').value.trim();
+  if (!url) return;
+  localStorage.setItem('gas_script_url', url);
+  SCRIPT_URL = url;
+  toast('Script URL updated ✦');
+}
+
+// ─────────────────────────────────────────
+// LOAD ALBUM
+// ─────────────────────────────────────────
+async function loadAlbum() {
+  try {
+    setStatus(null);
+    const res = await gas('getGallery');
+    if (!res.ok) throw new Error(res.error || 'Load failed');
+
+    mediaStore = res.media || [];
+
+    if (res.settings && res.settings.bride && res.settings.groom) {
+      settings = res.settings;
+      showMainUI();
+    } else {
+      document.getElementById('main-ui').style.display       = 'none';
+      document.getElementById('guest-waiting').style.display = 'none';
+      document.getElementById('setup-section').style.display = 'none';
+      if (IS_ADMIN) {
+        document.getElementById('setup-section').style.display = 'block';
+      } else {
+        document.getElementById('guest-waiting').style.display = 'block';
+      }
+    }
+
+    updateStats();
+    renderGallery();
+    setStatus(true);
+    setInterval(pollGallery, 15000);
+  } catch(e) {
+    setStatus(false);
+    toast('Connection error: ' + e.message);
+  }
+}
+
+async function pollGallery() {
+  try {
+    const res = await gas('getGallery');
+    if (!res.ok) return;
+    mediaStore = res.media || [];
+    updateStats();
+    renderGallery();
+  } catch(e) { /* silent */ }
+}
+
+// ─────────────────────────────────────────
+// GAS API HELPER
+// ─────────────────────────────────────────
+async function gas(action, extra = {}) {
+  const body = JSON.stringify({ action, ...extra });
+  const res  = await fetch(SCRIPT_URL, { method:'POST', body, redirect:'follow' });
+  const text = await res.text();
+  try { return JSON.parse(text); }
+  catch(e) { throw new Error('Bad response from script: ' + text.slice(0,120)); }
+}
+
+// ─────────────────────────────────────────
+// SETTINGS
+// ─────────────────────────────────────────
+function saveSetup() {
+  const b = document.getElementById('bride-name').value.trim();
+  const g = document.getElementById('groom-name').value.trim();
+  const d = document.getElementById('wedding-date').value;
+  const p = document.getElementById('album-pin').value.trim();
+  if (!b || !g) { toast('Please enter both names'); return; }
+  gas('saveSettings', { bride:b, groom:g, date:d, pin: p||'1234' })
+    .then(r => { if (r.ok) { toast('Album created! ✦'); loadAlbum(); } else toast(r.error); })
+    .catch(e => toast('Error: ' + e.message));
+}
+
+function showMainUI() {
+  document.getElementById('setup-section').style.display  = 'none';
+  document.getElementById('guest-waiting').style.display  = 'none';
+  document.getElementById('main-ui').style.display        = 'block';
+  document.getElementById('couple-display').textContent   = settings.groom + ' & ' + settings.bride;
+  if (settings.date) {
+    const d = new Date(settings.date + 'T00:00:00');
+    document.getElementById('date-display').textContent =
+      d.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+  }
+  if (IS_ADMIN) {
+    document.getElementById('edit-bride').value      = settings.bride;
+    document.getElementById('edit-groom').value      = settings.groom;
+    document.getElementById('edit-script-url').value = SCRIPT_URL;
+    generateQR();
+  }
+}
+
+function updateCouple() {
+  const b = document.getElementById('edit-bride').value.trim();
+  const g = document.getElementById('edit-groom').value.trim();
+  if (!b || !g) { toast('Names cannot be empty'); return; }
+  gas('saveSettings', { bride:b, groom:g, date:settings.date, pin:settings.pin })
+    .then(r => r.ok ? toast('Updated! ✦') : toast(r.error))
+    .catch(e => toast('Error: ' + e.message));
+}
+
+// ─────────────────────────────────────────
+// FILE HANDLING
+// ─────────────────────────────────────────
+const PLAY_SVG = `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="24" cy="24" r="22" fill="rgba(255,255,255,0.25)" stroke="rgba(255,255,255,0.8)" stroke-width="1.5"/>
+  <polygon points="19,14 38,24 19,34" fill="white"/>
+</svg>`;
+
+function handleFiles(files) {
+  Array.from(files).forEach(file => {
+    if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) return;
+
+    let uploadFile = file;
+    if (file.type === 'video/quicktime' || (file.name && file.name.toLowerCase().endsWith('.mov'))) {
+      uploadFile = new File([file], file.name.replace(/\.mov$/i, '.mp4'), { type: 'video/mp4', lastModified: file.lastModified });
+    }
+
+    pendingFiles.push(uploadFile);
+    const item = document.createElement('div');
+    item.className = 'preview-item';
+
+    const rm = document.createElement('button');
+    rm.className = 'rm'; rm.innerHTML = '&#x2715;';
+    rm.onclick = e => {
+      e.stopPropagation();
+      const pos = pendingFiles.indexOf(uploadFile);
+      if (pos !== -1) pendingFiles.splice(pos, 1);
+      item.remove();
+      updateUploadBtn();
+    };
+
+    if (uploadFile.type.startsWith('image/')) {
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(uploadFile);
+      item.appendChild(img);
+    } else {
+      const vid = document.createElement('video');
+      vid.src = URL.createObjectURL(uploadFile);
+      vid.muted = true;
+      vid.playsInline = true;
+      vid.preload = 'metadata';
+      vid.style.display = 'none';
+      document.body.appendChild(vid);
+
+      const canvas = document.createElement('canvas');
+      canvas.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+      item.appendChild(canvas);
+
+      vid.addEventListener('loadeddata', () => { vid.currentTime = 0.5; });
+      vid.addEventListener('seeked', () => {
+        canvas.width  = vid.videoWidth  || 160;
+        canvas.height = vid.videoHeight || 160;
+        canvas.getContext('2d').drawImage(vid, 0, 0, canvas.width, canvas.height);
+        document.body.removeChild(vid);
+      });
+
+      const playDiv = document.createElement('div');
+      playDiv.className = 'vid-play';
+      playDiv.innerHTML = PLAY_SVG;
+      item.appendChild(playDiv);
+
+      const badge = document.createElement('div');
+      badge.className = 'vid-badge'; badge.textContent = 'VIDEO';
+      item.appendChild(badge);
+    }
+
+    item.appendChild(rm);
+    document.getElementById('preview-grid').appendChild(item);
+  });
+  updateUploadBtn();
+}
+
+function updateUploadBtn() {
+  document.getElementById('upload-btn').disabled = pendingFiles.length === 0;
+}
+
+function clearPreview() {
+  pendingFiles = [];
+  document.getElementById('preview-grid').innerHTML = '';
+  document.getElementById('file-input').value = '';
+  updateUploadBtn();
+}
+
+// ─────────────────────────────────────────
+// IMAGE COMPRESSION
+// ─────────────────────────────────────────
+function compressImage(file, maxWidth = 1920, quality = 0.82) {
+  return new Promise(resolve => {
+    if (!file.type.startsWith('image/')) { resolve(file); return; }
+    const reader = new FileReader();
+    reader.onerror = () => resolve(file);
+    reader.onload = event => {
+      const img = new Image();
+      img.onerror = () => resolve(file);
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let w = img.width, h = img.height;
+        if (w > maxWidth) { h = Math.round(h * maxWidth / w); w = maxWidth; }
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        canvas.toBlob(blob => {
+          if (!blob) { resolve(file); return; }
+          resolve(new File([blob], file.name, { type:'image/jpeg', lastModified: Date.now() }));
+        }, 'image/jpeg', quality);
+      };
+      img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ─────────────────────────────────────────
+// UPLOAD → Apps Script → Google Drive
+// ─────────────────────────────────────────
+const CHUNK_SIZE      = 1 * 1024 * 1024;
+const CHUNK_THRESHOLD = 10 * 1024 * 1024;
+
+async function uploadFiles() {
+  if (!pendingFiles.length) return;
+  const guestName = document.getElementById('guest-name').value.trim() || 'Anonymous Guest';
+  const prog = document.getElementById('upload-prog');
+  const bar  = document.getElementById('upload-bar');
+  const btn  = document.getElementById('upload-btn');
+
+  prog.style.display = 'block'; bar.style.width = '0%';
+  btn.disabled = true; btn.textContent = 'Uploading…';
+
+  const total = pendingFiles.length;
+  let done = 0;
+
+  try {
+    for (const originalFile of pendingFiles) {
+      const file = await compressImage(originalFile);
+
+      let entry;
+      if (file.type.startsWith('video/') && file.size >= CHUNK_THRESHOLD) {
+        entry = await uploadChunked(file, guestName, (chunkDone, chunkTotal) => {
+          const fileProgress = (done / total) + (chunkDone / chunkTotal / total);
+          bar.style.width = Math.round(fileProgress * 100) + '%';
+        });
+      } else {
+        const base64 = await fileToBase64(file);
+        const res = await gas('upload', {
+          filename: file.name,
+          mimeType: file.type,
+          data:     base64,
+          guest:    guestName
+        });
+        if (!res.ok) throw new Error(res.error || 'Upload failed');
+        entry = res.entry;
+      }
+
+      mediaStore.unshift(entry);
+      done++;
+      bar.style.width = Math.round((done / total) * 100) + '%';
+      updateStats();
+      renderGallery();
+    }
+
+    setTimeout(() => { prog.style.display = 'none'; bar.style.width = '0%'; }, 600);
+    toast('✦ ' + total + ' file' + (total > 1 ? 's' : '') + ' shared!');
+    clearPreview();
+  } catch(e) {
+    toast('Upload failed: ' + e.message);
+    console.error(e);
+    prog.style.display = 'none';
+  }
+
+  btn.disabled = false; btn.textContent = 'Upload to Album ✦';
+}
+
+function sliceToBase64(file, start, end) {
+  return new Promise((resolve, reject) => {
+    const slice  = file.slice(start, end);
+    const reader = new FileReader();
+    reader.onload  = () => { const b64 = reader.result.split(',')[1]; resolve(b64); };
+    reader.onerror = () => reject(new Error('FileReader error on slice'));
+    reader.readAsDataURL(slice);
+  });
+}
+
+async function uploadChunked(file, guestName, onProgress) {
+  const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
+
+  const initRes = await gas('initChunk', {
+    filename: file.name,
+    mimeType: file.type,
+    guest:    guestName,
+    total:    totalChunks
+  });
+  if (!initRes.ok) throw new Error(initRes.error || 'Chunk init failed');
+  const { sessionId } = initRes;
+
+  for (let i = 0; i < totalChunks; i++) {
+    const start  = i * CHUNK_SIZE;
+    const end    = Math.min(start + CHUNK_SIZE, file.size);
+    const b64    = await sliceToBase64(file, start, end);
+    const appRes = await gas('appendChunk', { sessionId, chunk: i, data: b64 });
+    if (!appRes.ok) throw new Error(appRes.error || 'Chunk ' + i + ' failed');
+    if (onProgress) onProgress(i + 1, totalChunks);
+  }
+
+  const finRes = await gas('finalizeChunk', { sessionId });
+  if (!finRes.ok) throw new Error(finRes.error || 'Chunk finalize failed');
+  return finRes.entry;
+}
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload  = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = () => reject(new Error('FileReader failed — file may be too large for this browser'));
+    reader.readAsDataURL(file);
+  });
+}
+
+// ─────────────────────────────────────────
+// GALLERY
+// ─────────────────────────────────────────
+function renderGallery() {
+  const grid  = document.getElementById('gallery-grid');
+  const count = document.getElementById('gallery-count');
+  const dlBtn = document.getElementById('dl-all-btn');
+  grid.innerHTML = '';
+  count.textContent = mediaStore.length + ' file' + (mediaStore.length !== 1 ? 's' : '') + ' collected';
+  if (dlBtn) dlBtn.disabled = mediaStore.length === 0;
+
+  if (!mediaStore.length) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">No memories yet — be the first to share! 🥂</div>';
+    return;
+  }
+
+  mediaStore.forEach((m, i) => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.onclick = () => openLb(i);
+
+    const isVideo = m.type && m.type.startsWith('video/');
+
+    if (!isVideo) {
+      const img = document.createElement('img');
+      img.src = m.url; img.loading = 'lazy';
+      item.appendChild(img);
+    } else {
+      const img = document.createElement('img');
+      img.src = m.url;
+      img.loading = 'lazy';
+      img.onerror = () => { img.style.display = 'none'; item.style.background = 'var(--champ-pale)'; };
+      item.appendChild(img);
+
+      const playDiv = document.createElement('div');
+      playDiv.className = 'gal-play';
+      playDiv.innerHTML = PLAY_SVG;
+      item.appendChild(playDiv);
+
+      const badge = document.createElement('div');
+      badge.className = 'vid-badge'; badge.textContent = 'VIDEO';
+      item.appendChild(badge);
+    }
+
+    const meta = document.createElement('div');
+    meta.className = 'gallery-meta';
+    meta.innerHTML = '<span>' + escHtml(m.guest || '') + '</span>';
+    item.appendChild(meta);
+    grid.appendChild(item);
+  });
+}
+
+// ─────────────────────────────────────────
+// LIGHTBOX
+// ─────────────────────────────────────────
+function openLb(i) {
+  const m  = mediaStore[i];
+  const lb = document.getElementById('lightbox');
+  const c  = document.getElementById('lb-content');
+  c.innerHTML = '';
+
+  if (m.type && m.type.startsWith('video/')) {
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'display:flex; flex-direction:column; align-items:center; gap:1rem;';
+
+    const vid = document.createElement('video');
+    vid.src = 'https://drive.google.com/uc?export=download&id=' + m.id;
+    vid.controls = true;
+    vid.playsInline = true;
+    vid.preload = 'metadata';
+    vid.style.cssText = 'max-width:90vw; max-height:70vh; border-radius:8px; outline:none; background:#000;';
+
+    const btn = document.createElement('a');
+    btn.href = 'https://drive.google.com/file/d/' + m.id + '/view';
+    btn.target = '_blank';
+    btn.className = 'btn';
+    btn.style.cssText = 'background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); text-decoration: none; padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;';
+    btn.innerHTML = 'External Player ↗';
+
+    wrap.appendChild(vid);
+    wrap.appendChild(btn);
+    c.appendChild(wrap);
+  } else {
+    const img = document.createElement('img');
+    img.src = m.url;
+    c.appendChild(img);
+  }
+
+  document.getElementById('lb-info').textContent =
+    (m.guest||'') + ' · ' + new Date(m.ts).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  lb.classList.add('open');
+}
+
+function closeLb(e) {
+  if (e && e.target !== document.getElementById('lightbox')) return;
+  const lb = document.getElementById('lightbox');
+  lb.classList.remove('open');
+  const vid = lb.querySelector('video');
+  if (vid) { vid.pause(); vid.src = ''; }
+  document.getElementById('lb-content').innerHTML = '';
+}
+
+// ─────────────────────────────────────────
+// DOWNLOAD ALL
+// ─────────────────────────────────────────
+async function downloadAll() {
+  if (!mediaStore.length) { toast('No files to download yet'); return; }
+  toast('Preparing ZIP… this may take a moment');
+  const zip    = new JSZip();
+  const folder = zip.folder('MarkAnthony_Kimberly_Wedding_Memories');
+  try {
+    for (let i = 0; i < mediaStore.length; i++) {
+      const m   = mediaStore[i];
+      let ext = m.name ? m.name.split('.').pop().toLowerCase() : (m.type && m.type.includes('video') ? 'mp4' : 'jpg');
+      if (ext === 'mov') ext = 'mp4';
+      const res = await fetch(m.url);
+      const buf = await res.arrayBuffer();
+      folder.file((i+1) + '_' + (m.guest||'guest').replace(/\s+/g,'_') + '.' + ext, buf);
+    }
+    const blob = await zip.generateAsync({ type:'blob' });
+    const a    = document.createElement('a');
+    a.href     = URL.createObjectURL(blob);
+    a.download = 'MarkAnthony_Kimberly_Wedding_Memories.zip';
+    a.click();
+    toast('✦ Download started!');
+  } catch(e) {
+    toast('Download error: ' + e.message);
+  }
+}
+
+// ─────────────────────────────────────────
+// CLEAR ALBUM
+// ─────────────────────────────────────────
+async function clearAlbum() {
+  if (!confirm('Delete ALL memories? This cannot be undone.')) return;
+  try {
+    const res = await gas('deleteAll');
+    if (res.ok) {
+      mediaStore = [];
+      updateStats();
+      renderGallery();
+      toast('Album cleared');
+    } else {
+      toast('Error: ' + res.error);
+    }
+  } catch(e) {
+    toast('Error: ' + e.message);
+  }
+}
+
+// ─────────────────────────────────────────
+// STATS
+// ─────────────────────────────────────────
+function updateStats() {
+  document.getElementById('st-photos').textContent = mediaStore.filter(m => m.type && m.type.startsWith('image/')).length;
+  document.getElementById('st-videos').textContent = mediaStore.filter(m => m.type && m.type.startsWith('video/')).length;
+  document.getElementById('st-guests').textContent = [...new Set(mediaStore.map(m => m.guest))].length;
+}
+
+// ─────────────────────────────────────────
+// TABS
+// ─────────────────────────────────────────
+function showTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ─────────────────────────────────────────
+// ADMIN UNLOCK
+// ─────────────────────────────────────────
+function unlockAdmin() {
+  const p = document.getElementById('admin-pin-input').value;
+  if (p === settings.pin) {
+    document.getElementById('admin-lock').style.display  = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    toast('Admin unlocked ✦');
+  } else {
+    toast('Incorrect PIN');
+    document.getElementById('admin-pin-input').value = '';
+  }
+}
+
+// ─────────────────────────────────────────
+// QR CODE
+// ─────────────────────────────────────────
+function generateQR() {
+  const container = document.getElementById('qr-canvas');
+  container.innerHTML = '';
+  const url = window.location.href.split('?')[0].split('#')[0];
+  document.getElementById('qr-url-display').textContent = url;
+  if (typeof QRCode !== 'undefined') {
+    new QRCode(container, {
+      text: url, width: 200, height: 200,
+      colorDark: '#2a2015', colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  }
+}
+
+function downloadQR() {
+  const canvas = document.querySelector('#qr-canvas canvas');
+  if (!canvas) { toast('QR not ready'); return; }
+  const a = document.createElement('a');
+  a.href     = canvas.toDataURL('image/png');
+  a.download = 'MarkAnthony_Kimberly_QR.png';
+  a.click();
+  toast('QR downloaded!');
+}
+
+function copyUrl() {
+  const url = document.getElementById('qr-url-display').textContent;
+  navigator.clipboard.writeText(url)
+    .then(() => toast('Link copied!'))
+    .catch(() => toast('Copy manually: ' + url));
+}
+
+// ─────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────
+function setStatus(ok) {
+  const dot  = document.getElementById('fb-dot');
+  const text = document.getElementById('fb-status-text');
+  if (!dot) return;
+  if (ok === null) { dot.className = 'fb-dot'; text.textContent = 'Connecting…'; return; }
+  dot.className    = 'fb-dot' + (ok ? ' live' : ' error');
+  text.textContent = ok ? 'Connected to Drive' : 'Connection error';
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+init();
+</script>
+</body>
+</html>
